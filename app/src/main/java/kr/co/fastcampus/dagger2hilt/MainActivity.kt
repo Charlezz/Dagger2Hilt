@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import kr.co.fastcampus.dagger2hilt.di.MainSubcomponent
+import dagger.android.AndroidInjection
 import kr.co.fastcampus.dagger2hilt.ui.theme.Dagger2HiltTheme
 import javax.inject.Inject
 
@@ -21,18 +21,8 @@ class MainActivity : ComponentActivity() {
     lateinit var str:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        val appComponent = (application as MyApplication)
-            .appComponent
-
-        val mainSubcomponent:MainSubcomponent = appComponent
-                .mainSubcomponentFactory()
-                .create(this)
-
-//        appComponent.inject(this)
-        mainSubcomponent.inject(this)
-
-        Log.e("MainActivity", "app = ${appComponent.application()}")
         Log.e("MainActivity", "str = $str")
 
         setContent {
